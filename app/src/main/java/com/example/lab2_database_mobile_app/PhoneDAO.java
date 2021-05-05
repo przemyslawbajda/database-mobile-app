@@ -8,7 +8,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-/*DAO interface maps methods to SQL queries.
+/*
+DAO interface maps methods to SQL queries.
 Allows to read and write data from database.
 Is implemented automatically
  */

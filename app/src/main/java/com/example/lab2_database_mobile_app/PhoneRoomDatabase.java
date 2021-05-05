@@ -11,6 +11,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/*
+abstract class that provides access to DAO object,
+creates database and handle database events
+ */
+
 @Database(entities = {Phone.class}, version = 1, exportSchema = false)
 public abstract class PhoneRoomDatabase extends RoomDatabase {
     //abstract method that returns DAO
@@ -51,6 +56,7 @@ public abstract class PhoneRoomDatabase extends RoomDatabase {
             super.onCreate(db);
 
             databaseWriteExecutor.execute(() -> {
+                //retriving DAO to handle SQL queries
                 PhoneDAO dao = INSTANCE.phoneDAO();
 
                 dao.insert(new Phone("Samsung", "K10", "5.1.1 Lollipop", "https://www.lg.com/pl/wszystkie-smartfony/lg-K10"));
