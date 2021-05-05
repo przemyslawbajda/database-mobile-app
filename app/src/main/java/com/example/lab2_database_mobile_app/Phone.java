@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Represents Phone entity in database
+
 @Entity(tableName = "phone")
 public class Phone {
 
