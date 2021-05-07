@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">lab2-database-mobile-app</string>
+    <string name="delete_all_data">Delete all data</string>
 </resources>
