@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">lab2-database-mobile-app</string>
     <string name="delete_all_data">Delete all data</string>
+
+    //insert activity
+    <string name="manufacturer_label">Manufacturer</string>
+    <string name="model_label">Model</string>
+    <string name="android_version_label">Android</string>
+    <string name="website_label">Website</string>
+
+    <string name="button_website">Website</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_save">Save</string>
+
 </resources>
