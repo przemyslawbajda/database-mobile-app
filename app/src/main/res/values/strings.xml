@@ -12,4 +12,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
 
+    //errors
+    <string name="empty_input_error">Pole nie może być puste</string>
+
 </resources>

@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private PhoneListAdapter adapter;
     private FloatingActionButton floatingActionButton;
 
+    private static final int INSERT_ACTIVITY_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,29 @@ public class MainActivity extends AppCompatActivity {
 
         floatingActionButton.setOnClickListener((View v) -> {
             Intent intent = new Intent(MainActivity.this, InsertionActivity.class );
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, INSERT_ACTIVITY_REQUEST_CODE);
 
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        super.onActivityResult(requestCode, resultCode, result);
+
+        //if result code is ok and intent came from InsertActivity
+        if(resultCode == RESULT_OK && requestCode == INSERT_ACTIVITY_REQUEST_CODE){
+
+            //create new phone
+            Phone newPhone = new Phone(
+                    result.getStringExtra("manufacturer_input"),
+                    result.getStringExtra("model_input"),
+                    result.getStringExtra("android_input"),
+                    result.getStringExtra("website_input")
+            );
+
+            //and new phone to database
+            phoneViewModel.insert(newPhone);
+
+        }
     }
 }

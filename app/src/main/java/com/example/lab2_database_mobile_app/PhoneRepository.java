@@ -33,4 +33,10 @@ public class PhoneRepository {
         });
     }
 
+    void insert(Phone phone){
+        PhoneRoomDatabase.databaseWriteExecutor.execute(() ->{
+           phoneDAO.insert(phone);
+        });
+    }
+
 }
