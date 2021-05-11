@@ -6,16 +6,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     private PhoneViewModel phoneViewModel;
     private PhoneListAdapter adapter;
+    private FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         phoneViewModel.getAllPhones().observe(this, phones -> {
             adapter.setPhoneList(phones);
         });
+
+        setFABListener();
+
     }
 
     @Override
@@ -57,5 +64,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setFABListener(){
+        floatingActionButton = findViewById(R.id.fabMain);
+
+        floatingActionButton.setOnClickListener((View v) -> {
+            Intent intent = new Intent(MainActivity.this, InsertionActivity.class );
+            startActivityForResult(intent, 1);
+
+        });
     }
 }
