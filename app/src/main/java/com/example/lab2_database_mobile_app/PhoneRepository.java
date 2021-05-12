@@ -39,4 +39,10 @@ public class PhoneRepository {
         });
     }
 
+    void update(Phone phone){
+        PhoneRoomDatabase.databaseWriteExecutor.execute(() ->{
+            phoneDAO.update(phone);
+        });
+    }
+
 }

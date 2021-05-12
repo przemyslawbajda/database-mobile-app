@@ -35,4 +35,6 @@ public class PhoneViewModel extends AndroidViewModel {
 
     public void insert(Phone phone){ repository.insert(phone);}
 
+    public void update(Phone phone){ repository.update(phone);}
+
 }

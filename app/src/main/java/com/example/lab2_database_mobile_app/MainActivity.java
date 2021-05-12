@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         //if result code is ok and intent came from InsertActivity
         if(resultCode == RESULT_OK && requestCode == INSERT_ACTIVITY_REQUEST_CODE){
 
-            //create new phone
             Phone newPhone = new Phone(
                     result.getStringExtra("manufacturer_input"),
                     result.getStringExtra("model_input"),
