@@ -15,7 +15,9 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
+import org.w3c.dom.Element;
+
+public class MainActivity extends AppCompatActivity implements PhoneListAdapter.OnItemClickListener {
 
     private PhoneViewModel phoneViewModel;
     private PhoneListAdapter adapter;
@@ -96,5 +98,18 @@ public class MainActivity extends AppCompatActivity {
             phoneViewModel.insert(newPhone);
 
         }
+    }
+
+    @Override
+    public void OnItemClickListener(Phone phone) {
+        Intent intent = new Intent(MainActivity.this, InsertionActivity.class);
+
+        intent.putExtra("id_data", phone.getId());
+        intent.putExtra("manufacturer_data", phone.getManufacturer());
+        intent.putExtra("model_data", phone.getModel());
+        intent.putExtra("android_data", phone.getAndroidVersion());
+        intent.putExtra("website_data", phone.getWebsite());
+
+        startActivityForResult(intent, INSERT_ACTIVITY_REQUEST_CODE );
     }
 }
