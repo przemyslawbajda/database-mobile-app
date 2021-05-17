@@ -11,6 +11,7 @@
     <string name="button_website">Website</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
+    <string name="button_update">Update</string>
 
     //errors
     <string name="empty_input_error">Pole nie może być puste</string>

@@ -3,6 +3,8 @@ package com.example.lab2_database_mobile_app;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Insert;
 import androidx.room.PrimaryKey;
 
 // Represents Phone entity in database
@@ -30,7 +32,20 @@ public class Phone {
     @ColumnInfo(name = "website")
     private String website;
 
+
+    @Ignore
+    //for new phone creating
     public Phone(@NonNull String manufacturer, @NonNull String model,@NonNull String androidVersion, @NonNull String website){
+        this.id = id;
+        this.manufacturer = manufacturer;
+        this.model = model;
+        this.androidVersion = androidVersion;
+        this.website = website;
+    }
+
+
+    //for records update
+    public Phone(int id, @NonNull String manufacturer, @NonNull String model,@NonNull String androidVersion, @NonNull String website){
         this.id = id;
         this.manufacturer = manufacturer;
         this.model = model;

@@ -18,6 +18,8 @@ public class InsertionActivity extends AppCompatActivity {
     Button cancelButton;
     Button saveButton;
 
+    int phoneID=-1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +27,19 @@ public class InsertionActivity extends AppCompatActivity {
 
         setEditTextReferences();
         setCancelButton();
-        setSaveButton();
 
+        //check if intend came with data to edit phone fields
+        Intent intent = getIntent();
+        if(intent.hasExtra("manufacturer_data")){
+            phoneID = intent.getIntExtra("id_data", -1);
+            manufacturerEditText.setText(intent.getStringExtra("manufacturer_data"));
+            modelEditText.setText(intent.getStringExtra("model_data"));
+            androidVersionEditText.setText(intent.getStringExtra("android_data"));
+            websiteEditText.setText(intent.getStringExtra("website_data"));
+            setUpdateButton();
+        }else{
+            setSaveButton();
+        }
     }
 
     //read references to inputs
@@ -50,17 +63,15 @@ public class InsertionActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.buttonSave);
 
         saveButton.setOnClickListener(v -> {
+            setIntend();
+        });
+    }
 
-            if(areAllFieldsValid()){
-                //if all input fields are not empty, create an intent
-                Intent intent = new Intent();
-                intent.putExtra("manufacturer_input", manufacturerEditText.getText().toString());
-                intent.putExtra("model_input", modelEditText.getText().toString());
-                intent.putExtra("android_input", androidVersionEditText.getText().toString());
-                intent.putExtra("website_input", websiteEditText.getText().toString());
-                setResult(RESULT_OK, intent);
-                finish(); //close current activity
-            }
+    void setUpdateButton(){
+        saveButton = findViewById(R.id.buttonSave);
+        saveButton.setText(R.string.button_update);
+        saveButton.setOnClickListener(v -> {
+            setIntend();
         });
     }
 
@@ -86,4 +97,17 @@ public class InsertionActivity extends AppCompatActivity {
         return true;
     }
 
+    private void setIntend() {
+        if(areAllFieldsValid()){
+            //if all input fields are not empty, create an intent
+            Intent intent = new Intent();
+            intent.putExtra("id_data", phoneID);
+            intent.putExtra("manufacturer_input", manufacturerEditText.getText().toString());
+            intent.putExtra("model_input", modelEditText.getText().toString());
+            intent.putExtra("android_input", androidVersionEditText.getText().toString());
+            intent.putExtra("website_input", websiteEditText.getText().toString());
+            setResult(RESULT_OK, intent);
+            finish(); //close current activity
+        }
+    }
 }

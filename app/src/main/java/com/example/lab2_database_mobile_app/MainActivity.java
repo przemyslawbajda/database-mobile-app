@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
     private FloatingActionButton floatingActionButton;
 
     private static final int INSERT_ACTIVITY_REQUEST_CODE = 1;
-
+    private static final int UPDATE_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,21 +88,44 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
         //if result code is ok and intent came from InsertActivity
         if(resultCode == RESULT_OK && requestCode == INSERT_ACTIVITY_REQUEST_CODE){
 
-            Phone newPhone = new Phone(
-                    result.getStringExtra("manufacturer_input"),
-                    result.getStringExtra("model_input"),
-                    result.getStringExtra("android_input"),
-                    result.getStringExtra("website_input")
-            );
+            Phone newPhone = createPhone(result);
 
             //and new phone to database
             phoneViewModel.insert(newPhone);
-
         }
+
+        if(resultCode == RESULT_OK && requestCode == UPDATE_REQUEST_CODE){
+            Phone newPhone = updatePhone(result);
+
+            Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+            phoneViewModel.update(newPhone);
+        }
+    }
+
+    private Phone createPhone(Intent result) {
+        //create new phone based on received intent data
+        return new Phone(
+                result.getStringExtra("manufacturer_input"),
+                result.getStringExtra("model_input"),
+                result.getStringExtra("android_input"),
+                result.getStringExtra("website_input")
+        );
+    }
+
+    private Phone updatePhone(Intent result) {
+        //create new phone based on received intent data
+        return new Phone(
+                result.getIntExtra("id_data", -1),
+                result.getStringExtra("manufacturer_input"),
+                result.getStringExtra("model_input"),
+                result.getStringExtra("android_input"),
+                result.getStringExtra("website_input")
+        );
     }
 
     @Override
     public void OnItemClickListener(Phone phone) {
+        //starts new activity when row is clicked
         Intent intent = new Intent(MainActivity.this, InsertionActivity.class);
 
         intent.putExtra("id_data", phone.getId());
@@ -110,6 +134,6 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
         intent.putExtra("android_data", phone.getAndroidVersion());
         intent.putExtra("website_data", phone.getWebsite());
 
-        startActivityForResult(intent, INSERT_ACTIVITY_REQUEST_CODE );
+        startActivityForResult(intent, UPDATE_REQUEST_CODE );
     }
 }
