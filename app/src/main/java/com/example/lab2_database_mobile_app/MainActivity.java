@@ -3,6 +3,7 @@ package com.example.lab2_database_mobile_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
 
     private PhoneViewModel phoneViewModel;
     private PhoneListAdapter adapter;
-    private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView;
 
     private static final int INSERT_ACTIVITY_REQUEST_CODE = 1;
     private static final int UPDATE_REQUEST_CODE = 2;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
         setContentView(R.layout.activity_main);
 
         //setting adapter on a list
-        RecyclerView recyclerView=findViewById(R.id.recyclerview);
+        recyclerView=findViewById(R.id.recyclerview);
         adapter = new PhoneListAdapter(this);
         recyclerView.setAdapter(adapter);
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
         });
 
         setFABListener();
+        setItemTouchHelper();
 
     }
 
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
     }
 
     private void setFABListener(){
-        floatingActionButton = findViewById(R.id.fabMain);
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabMain);
 
         floatingActionButton.setOnClickListener((View v) -> {
             Intent intent = new Intent(MainActivity.this, InsertionActivity.class );
@@ -134,5 +136,35 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
         intent.putExtra("website_data", phone.getWebsite());
 
         startActivityForResult(intent, UPDATE_REQUEST_CODE );
+    }
+
+
+    void setItemTouchHelper(){
+
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull  RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                //set phone delete from DB on swipe
+
+                int positon = viewHolder.getAdapterPosition();
+                //get phone via phoneViewModel
+                Phone phoneToDelete = phoneViewModel.getAllPhones().getValue().get(positon);
+
+                //delete phone
+                phoneViewModel.delete(phoneToDelete);
+
+            }
+        };
+
+        //create itemTouchHelper with callback
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+
+        //attach to recyclerView
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }
