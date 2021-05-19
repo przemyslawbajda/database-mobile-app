@@ -2,6 +2,7 @@ package com.example.lab2_database_mobile_app;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,6 +23,9 @@ public interface PhoneDAO {
 
     @Query("DELETE FROM phone")
     void deleteAll();
+
+    @Delete
+    void delete(Phone phone);
 
     @Query("SELECT * FROM phone ORDER BY manufacturer ASC")
     LiveData<List<Phone>> getAlphabetizedElements();

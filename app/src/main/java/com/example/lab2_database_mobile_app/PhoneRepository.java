@@ -45,4 +45,11 @@ public class PhoneRepository {
         });
     }
 
+    void delete(Phone phone){
+        PhoneRoomDatabase.databaseWriteExecutor.execute(() ->{
+            phoneDAO.delete(phone);
+        });
+
+    }
+
 }
