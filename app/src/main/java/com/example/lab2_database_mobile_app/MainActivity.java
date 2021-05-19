@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
         if(resultCode == RESULT_OK && requestCode == UPDATE_REQUEST_CODE){
             Phone newPhone = updatePhone(result);
 
-            Toast.makeText(this, "", Toast.LENGTH_LONG).show();
             phoneViewModel.update(newPhone);
         }
     }
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
     }
 
     private Phone updatePhone(Intent result) {
-        //create new phone based on received intent data
+        //update phone based on received intent data
         return new Phone(
                 result.getIntExtra("id_data", -1),
                 result.getStringExtra("manufacturer_input"),

@@ -2,9 +2,11 @@ package com.example.lab2_database_mobile_app;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +19,7 @@ public class InsertionActivity extends AppCompatActivity {
 
     Button cancelButton;
     Button saveButton;
+    Button webSiteButton;
 
     int phoneID=-1;
 
@@ -27,6 +30,7 @@ public class InsertionActivity extends AppCompatActivity {
 
         setEditTextReferences();
         setCancelButton();
+        setWebSiteEdit();
 
         //check if intend came with data to edit phone fields
         Intent intent = getIntent();
@@ -72,6 +76,22 @@ public class InsertionActivity extends AppCompatActivity {
         saveButton.setText(R.string.button_update);
         saveButton.setOnClickListener(v -> {
             setIntend();
+        });
+    }
+
+    void setWebSiteEdit(){
+        webSiteButton = findViewById(R.id.buttonWebsite);
+
+        webSiteButton.setOnClickListener(v -> {
+            String address = websiteEditText.getText().toString();
+
+            if(address.startsWith("https://")){
+                //create an intent with url
+                Intent intentWebsite = new Intent("android.intent.action.VIEW", Uri.parse(address));
+                startActivity(intentWebsite);
+            }else{
+                Toast.makeText(InsertionActivity.this, R.string.website_error, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

@@ -13,6 +13,8 @@
     <string name="button_save">Save</string>
     <string name="button_update">Update</string>
 
+    <string name="website_error">Inappropriate website address </string>
+
     //errors
     <string name="empty_input_error">Pole nie może być puste</string>
 
